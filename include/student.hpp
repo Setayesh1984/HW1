@@ -8,22 +8,22 @@ using namespace std;
 struct Student
 {
     string name;
-    int studentID;
+    long long studentID;
     int units; // tedad vahed
     float gpa; // moAdel
     int securityCode;
     Student *next; //*parvande bAdi
 };
 
-Student *createStudent(const string &name, int id, int units, float gpa, int code);
+Student *createStudent(const string &name, long long id, int units, float gpa, int code);
 
 void addStudent(Student *&head, Student *newStudent);
 
-bool deleteStudent(Student *&head, int id);
+bool deleteStudent(Student *&head, long long id);
 
-Student *searchStudent(Student *head, int id);
+Student *searchStudent(Student *head, long long id);
 
-bool updateStudent(Student *head, int id, int newUnits, float newGPA);
+bool updateStudent(Student *head, long long id, int newUnits, float newGPA);
 
 void displayAll(Student *head);
 
