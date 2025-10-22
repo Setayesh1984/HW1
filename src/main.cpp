@@ -21,16 +21,15 @@ int main()
         cout << "Your choice: ";
         cin >> choice;
 
-        
-        if (cin.fail())
+        if (cin.fail() || choice < 1 || choice > 6)
         {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << " Invalid input. Try again.\n";
+            cout << "Invalid choice. Please enter a number between 1 and 6.\n";
             continue;
         }
 
-        cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
         if (choice == 1)
         {
@@ -41,23 +40,46 @@ int main()
 
             cout << "\n=== Add new file ===" << endl;
             cout << "Student Name: ";
-            getline(cin, name); 
+            getline(cin, name);
+
             cout << "Student ID (up to 11 digits): ";
             cin >> id;
-            cout << "Number of units: ";
-            cin >> units;
-            cout << "GPA: ";
-            cin >> gpa;
-            cout << "Security code (any 4 digits): ";
-            cin >> code;
-
-           
-            if (cin.fail())
+            while (cin.fail() || id <= 0)
             {
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                cout << " Invalid input. Student not added.\n";
-                continue;
+                cout << "Invalid ID. Please enter a positive number: ";
+                cin >> id;
+            }
+
+            cout << "Number of units (0 - 25): ";
+            cin >> units;
+            while (cin.fail() || units < 0 || units > 25)
+            {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Invalid number of units (0 - 25 allowed). Enter again: ";
+                cin >> units;
+            }
+
+            cout << "GPA (0 - 20): ";
+            cin >> gpa;
+            while (cin.fail() || gpa < 0 || gpa > 20)
+            {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Invalid GPA. Must be between 0 and 20. Enter again: ";
+                cin >> gpa;
+            }
+
+            cout << "Security code (4 digits): ";
+            cin >> code;
+            while (cin.fail() || code < 1000 || code > 9999)
+            {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Invalid security code (must be 4 digits). Enter again: ";
+                cin >> code;
             }
 
             Student *newStu = createStudent(name, id, units, gpa, code);
@@ -73,10 +95,18 @@ int main()
             cout << "Student number in question: ";
             cin >> id;
 
+            while (cin.fail() || id <= 0)
+            {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Invalid ID. Please enter a positive number: ";
+                cin >> id;
+            }
+
             if (deleteStudent(head, id))
-                cout << " The file was successfully deleted." << endl;
+                cout << "The file was successfully deleted." << endl;
             else
-                cout << " No file with this number was found." << endl;
+                cout << "No file with this number was found." << endl;
         }
 
         else if (choice == 3)
@@ -86,10 +116,18 @@ int main()
             cout << "Student number in question: ";
             cin >> id;
 
+            while (cin.fail() || id <= 0)
+            {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Invalid ID. Please enter a positive number: ";
+                cin >> id;
+            }
+
             Student *found = searchStudent(head, id);
             if (found != nullptr)
             {
-                cout << "\n File found:" << endl;
+                cout << "\nFile found:" << endl;
                 cout << "Name: " << found->name << endl;
                 cout << "Student ID: " << found->studentID << endl;
                 cout << "Units: " << found->units << endl;
@@ -98,7 +136,7 @@ int main()
             }
             else
             {
-                cout << " No file with this number was found." << endl;
+                cout << "No file with this number was found." << endl;
             }
         }
 
@@ -108,12 +146,36 @@ int main()
             long long id;
             int units;
             float gpa;
+
             cout << "Student number in question: ";
             cin >> id;
-            cout << "New number of units: ";
+            while (cin.fail() || id <= 0)
+            {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Invalid ID. Please enter a positive number: ";
+                cin >> id;
+            }
+
+            cout << "New number of units (0 - 25): ";
             cin >> units;
-            cout << "New GPA: ";
+            while (cin.fail() || units < 0 || units > 25)
+            {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Invalid number of units. Enter again (0 - 25): ";
+                cin >> units;
+            }
+
+            cout << "New GPA (0 - 20): ";
             cin >> gpa;
+            while (cin.fail() || gpa < 0 || gpa > 20)
+            {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << " Invalid GPA. Enter again (0 - 20): ";
+                cin >> gpa;
+            }
 
             if (updateStudent(head, id, units, gpa))
                 cout << "File updated successfully." << endl;
@@ -132,14 +194,8 @@ int main()
             cout << "\n Thanks for using this system! Data will be freed from memory..." << endl;
         }
 
-        else
-        {
-            cout << " Invalid option, please try again." << endl;
-        }
-
     } while (choice != 6);
 
-    
     while (head != nullptr)
     {
         Student *temp = head;
