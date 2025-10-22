@@ -14,22 +14,43 @@ Student *createStudent(const string &name, long long id, int units, float gpa, i
     return newStudent;
 }
 
-void addStudent(Student *&head, Student *newStudent)
+bool addStudent(Student *&head, Student *newStudent)
 {
+   
     if (head == nullptr)
     {
         head = newStudent;
+        return true;
     }
-    else
+
+   
+    Student *current = head;
+    while (current != nullptr)
     {
-        Student *temp = head;
-        while (temp->next != nullptr)
+        if (current->studentID == newStudent->studentID)
         {
-            temp = temp->next;
+            cout << "Error: A student with this ID already exists!\n";
+            delete newStudent;
+            return false;
         }
-        temp->next = newStudent;
+        if (current->securityCode == newStudent->securityCode)
+        {
+            cout << "Error: A student with this security code already exists!\n";
+            delete newStudent;
+            return false;
+        }
+        current = current->next;
     }
+
+    
+    Student *temp = head;
+    while (temp->next != nullptr)
+        temp = temp->next;
+
+    temp->next = newStudent;
+    return true;
 }
+
 
 Student *searchStudent(Student *head, long long id)
 {
@@ -103,4 +124,29 @@ bool deleteStudent(Student *&head, long long id)
     current->next = temp->next;
     delete temp;
     return true;
+}
+
+
+bool existsByID(Student *head, long long id)
+{
+    Student *current = head;
+    while (current != nullptr)
+    {
+        if (current->studentID == id)
+            return true;
+        current = current->next;
+    }
+    return false;
+}
+
+bool existsByCode(Student *head, int code)
+{
+    Student *current = head;
+    while (current != nullptr)
+    {
+        if (current->securityCode == code)
+            return true;
+        current = current->next;
+    }
+    return false;
 }
