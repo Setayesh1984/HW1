@@ -44,11 +44,16 @@ int main()
 
             cout << "Student ID (up to 11 digits): ";
             cin >> id;
-            while (cin.fail() || id <= 0)
+            while (cin.fail() || id <= 0 || existsByID(head, id))
             {
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                cout << "Invalid ID. Please enter a positive number: ";
+
+                if (existsByID(head, id))
+                    cout << "This student ID already exists. Please enter a new one: ";
+                else
+                    cout << "Invalid ID. Please enter a positive number: ";
+
                 cin >> id;
             }
 
@@ -74,18 +79,22 @@ int main()
 
             cout << "Security code (4 digits): ";
             cin >> code;
-            while (cin.fail() || code < 1000 || code > 9999)
+            while (cin.fail() || code < 1000 || code > 9999 || existsByCode(head, code))
             {
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                cout << "Invalid security code (must be 4 digits). Enter again: ";
+
+                if (existsByCode(head, code))
+                    cout << "This security code already exists. Please enter a different one: ";
+                else
+                    cout << "Invalid security code (must be 4 digits). Enter again: ";
+
                 cin >> code;
             }
 
             Student *newStu = createStudent(name, id, units, gpa, code);
             addStudent(head, newStu);
             cout << "File added successfully!" << endl;
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
         }
 
         else if (choice == 2)
