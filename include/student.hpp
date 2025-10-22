@@ -17,7 +17,7 @@ struct Student
 
 Student *createStudent(const string &name, long long id, int units, float gpa, int code);
 
-void addStudent(Student *&head, Student *newStudent);
+bool addStudent(Student *&head, Student *newStudent);
 
 bool deleteStudent(Student *&head, long long id);
 
@@ -26,5 +26,10 @@ Student *searchStudent(Student *head, long long id);
 bool updateStudent(Student *head, long long id, int newUnits, float newGPA);
 
 void displayAll(Student *head);
+
+bool existsByID(Student *head, long long id);
+
+bool existsByCode(Student *head, int code);
+
 
 #endif
