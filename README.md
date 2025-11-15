@@ -42,7 +42,7 @@ Modular code design with header/source separation
 
 - **Setayesh Asgari**
 - **Course: Object-Oriented Programming (OOP)**
-- **Instructor: Abdoli**
+- **Instructor: javidani**
 
 
 [repository link](https://github.com/Setayesh1984/HW1.git)
